@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_AUTHORS, ADD_BOOK,GET_BOOKS } from '../quaries/Quaries';
 import { useMutation } from '@apollo/client';
+import loader from '../loading.gif'
+
 
 
 function AddBook() {
@@ -13,11 +15,8 @@ function AddBook() {
         author: ''
     });
     const { loading, error, data } = useQuery(GET_AUTHORS);
-    const [addBook,{loading: mutationLoading,error: mutationError,data: mutationData}] = useMutation(ADD_BOOK,
-        {
-            refetchQueries: [{ query: GET_BOOKS }]
-        }
-        );
+     // eslint-disable-next-line 
+    const [addBook,{loading: mutationLoading,error: mutationError,data: mutationData}] = useMutation(ADD_BOOK);
 
 
 
@@ -30,7 +29,9 @@ function AddBook() {
                 name: details.bname,
                 genre: details.genre,
                 authorId: details.author
-            }
+            },
+            refetchQueries: [{ query: GET_BOOKS }]
+            
         });
         if( !mutationLoading && !mutationError){
             alert("Book Added");
@@ -54,7 +55,11 @@ function AddBook() {
     return (
         <>
             <h1 className='text-center mt-4'>Add Book</h1>
-            {loading && <p>Loading Authors ...</p>}
+            {loading && 
+            <div style={{ textAlign: 'center' }}>
+                <img className='my-3' src={loader} alt="loading" width='35px' />
+            </div>
+            }
             {error && <p>Error :{error.message}</p>}
             {data && <div className="container">
                 <form onSubmit={handleSubmit} >

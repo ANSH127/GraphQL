@@ -11,6 +11,7 @@ import {
   Route
   // Link
 } from 'react-router-dom';
+import Bookdetails from './components/Bookdetails';
 function App() {
 
   const client = new ApolloClient({
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<BookList />} />
             <Route exact path="/addbook" element={<AddBook />} />
+            <Route exact path="/bookdetails/:id" element={<Bookdetails/>} />
 
           </Routes>
         </Router>
