@@ -1,6 +1,8 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql').graphqlHTTP;
 const schema = require('./schema/schema');
+const cors = require('cors');
+
 
 require('dotenv').config();
 
@@ -8,6 +10,8 @@ const mongoose = require('mongoose');
 
 const dburl = `mongodb+srv://${process.env.MONOGODB_USERNAME}:${process.env.MONOGODB_PASSWORD}@cluster0.46ihpbt.mongodb.net/?retryWrites=true&w=majority`
 const app = express();
+//allow cross-origin requests
+app.use(cors());
 app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true
